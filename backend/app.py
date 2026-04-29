@@ -1,5 +1,4 @@
 from sanic import Sanic
-from sanic_ext import Extend
 
 from api.v1.auth import LoginView
 from api.v1.grade import GradeQueryView
@@ -8,7 +7,6 @@ from middleware.auth_middleware import auth_middleware
 
 
 app = Sanic("GradeSystem")
-Extend.register(app)
 
 
 @app.listener("before_server_stop")
