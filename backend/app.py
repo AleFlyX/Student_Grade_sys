@@ -14,6 +14,21 @@ async def close_database_pool(app, loop):
     await BaseMapper.close_pool()
 
 
+@app.middleware("response")
+async def add_cors_headers(request, response):
+    """添加 CORS 响应头"""
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Max-Age"] = "3600"
+
+
+@app.options("/<path:path>")
+async def handle_options(request, path):
+    """处理 OPTIONS 预检请求"""
+    return None
+
+
 @app.middleware("request")
 async def verify_token(request):
     if request.path == "/api/auth/login":
