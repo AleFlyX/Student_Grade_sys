@@ -1,4 +1,5 @@
 from sanic import Sanic
+from sanic.response import empty
 
 from api.v1.auth import LoginView
 from api.v1.grade import GradeQueryView
@@ -31,6 +32,9 @@ async def handle_options(request, path):
 
 @app.middleware("request")
 async def verify_token(request):
+    if request.method == "OPTIONS":
+        return empty(status=200)
+
     if request.path == "/api/auth/login":
         return None
 
