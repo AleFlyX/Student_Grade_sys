@@ -1,3 +1,6 @@
+
+-- 解决中文乱码：先设置字符集
+SET NAMES utf8mb4;
 -- 创建数据库（可选，根据实际情况调整）
 CREATE DATABASE IF NOT EXISTS grade_system
 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
