@@ -1,3 +1,3 @@
-from controllers.auth_controller import LoginView
+from controllers.auth_controller import LoginView, RegisterView
 
-__all__ = ["LoginView"]
+__all__ = ["LoginView", "RegisterView"]

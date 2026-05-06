@@ -1,7 +1,7 @@
 from sanic import Sanic
 from sanic.response import empty
 
-from api.v1.auth import LoginView
+from api.v1.auth import LoginView, RegisterView
 from api.v1.grade import GradeQueryView
 from mappers.base_mapper import BaseMapper
 from middleware.auth_middleware import auth_middleware
@@ -38,6 +38,9 @@ async def verify_token(request):
     if request.path == "/api/auth/login":
         return None
 
+    if request.path == "/api/auth/register":
+        return None
+
     if request.path.startswith("/api/grades"):
         return await auth_middleware(request)
 
@@ -45,6 +48,7 @@ async def verify_token(request):
 
 
 app.add_route(LoginView.as_view(), "/api/auth/login", methods=["POST"])
+app.add_route(RegisterView.as_view(), "/api/auth/register", methods=["POST"])
 app.add_route(GradeQueryView.as_view(), "/api/grades", methods=["GET"])
 
 

@@ -19,3 +19,11 @@ class StudentMapper(BaseMapper):
             WHERE student_id = %s AND password_hash = %s
         """
         return await cls.execute_one(sql, (student_id, password_hash))
+
+    @classmethod
+    async def create_student(cls, student_id, name, password_hash, major=None, grade=None):
+        sql = """
+            INSERT INTO students (student_id, name, password_hash, major, grade)
+            VALUES (%s, %s, %s, %s, %s)
+        """
+        return await cls.execute_update(sql, (student_id, name, password_hash, major, grade))
