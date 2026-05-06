@@ -10,13 +10,13 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/Login.vue'),
+    component: () => import('@/views/public/login/Login.vue'),
     meta: { requiresAuth: false },
   },
   {
     path: '/grades',
     name: 'GradeQuery',
-    component: () => import('@/views/GradeQuery.vue'),
+    component: () => import('@/views/main/grade/GradeQuery.vue'),
     meta: { requiresAuth: true },
   },
 ]

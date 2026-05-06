@@ -254,6 +254,7 @@ const handleRegister = async () => {
   backdrop-filter: blur(14px);
   position: relative;
   z-index: 1;
+  transition: all 0.3s ease-in-out;
 }
 
 .brand-panel {
@@ -315,6 +316,7 @@ const handleRegister = async () => {
   border-radius: 22px;
   padding: 26px;
   border: 1px solid #e6edf5;
+
 }
 
 .form-header {
