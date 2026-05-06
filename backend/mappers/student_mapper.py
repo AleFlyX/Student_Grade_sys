@@ -12,6 +12,15 @@ class StudentMapper(BaseMapper):
         return await cls.execute_one(sql, (student_id,))
 
     @classmethod
+    async def find_profile_by_student_id(cls, student_id):
+        sql = """
+            SELECT student_id, name, major, grade
+            FROM students
+            WHERE student_id = %s
+        """
+        return await cls.execute_one(sql, (student_id,))
+
+    @classmethod
     async def verify_password(cls, student_id, password_hash):
         sql = """
             SELECT student_id, name, major, grade
@@ -27,3 +36,12 @@ class StudentMapper(BaseMapper):
             VALUES (%s, %s, %s, %s, %s)
         """
         return await cls.execute_update(sql, (student_id, name, password_hash, major, grade))
+
+    @classmethod
+    async def update_password(cls, student_id, password_hash):
+        sql = """
+            UPDATE students
+            SET password_hash = %s
+            WHERE student_id = %s
+        """
+        return await cls.execute_update(sql, (password_hash, student_id))
