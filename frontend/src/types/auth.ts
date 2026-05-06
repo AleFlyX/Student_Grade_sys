@@ -3,6 +3,14 @@ export interface LoginParams {
   password: string
 }
 
+export interface RegisterParams {
+  studentId: string
+  name: string
+  password: string
+  major?: string
+  grade?: string
+}
+
 export interface StudentInfo {
   studentId: string
   name: string
@@ -15,3 +23,5 @@ export interface LoginResponse {
   expiresIn: number
   studentInfo: StudentInfo
 }
+
+export interface RegisterResponse extends LoginResponse {}
