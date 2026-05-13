@@ -1,54 +1,29 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useRoute, useRouter, RouterView } from 'vue-router'
+import { logoutApi } from '@/api/auth'
+import Layout from '@/layouts/index.vue'
 import { useUserStore } from '@/stores/user'
-import { useRouter, RouterLink, RouterView } from 'vue-router'
 
 const userStore = useUserStore()
 const router = useRouter()
+const route = useRoute()
 
 const student = computed(() => userStore.studentInfo)
+const showLayout = computed(() => route.meta.requiresAuth !== false && route.path !== '/login')
 
-function logout() {
+async function logout() {
+  try {
+    await logoutApi()
+  } catch {
+    // token 失效时直接本地清理即可
+  }
   userStore.clearUser()
   router.push('/login')
 }
 </script>
 
 <template>
-  <el-container>
-    <el-header class="app-header" height="64px">
-      <div class="left">
-        <RouterLink to="/">首页</RouterLink>
-        <RouterLink to="/grades">成绩查询</RouterLink>
-      </div>
-      <div class="right">
-        <span v-if="student">{{ student.name }} </span>
-        <el-button v-if="student" type="text" @click="logout">退出</el-button>
-        <RouterLink v-else to="/login">登录</RouterLink>
-      </div>
-    </el-header>
-
-    <main>
-      <RouterView />
-    </main>
-  </el-container>
+  <Layout v-if="showLayout" />
+  <RouterView v-else />
 </template>
-
-<style scoped>
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-}
-.left a,
-.right a {
-  margin-right: 16px;
-  color: #fff;
-}
-.left a {
-  color: #fff;
-  font-weight: 600;
-}
-
-</style>

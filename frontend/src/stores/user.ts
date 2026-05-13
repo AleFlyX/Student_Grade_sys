@@ -13,11 +13,15 @@ export const useUserStore = defineStore('user', () => {
     setToken(newToken)
   }
 
+  const setStudentInfo = (info: StudentInfo) => {
+    studentInfo.value = info
+  }
+
   const clearUser = () => {
     token.value = null
     studentInfo.value = null
     removeToken()
   }
 
-  return { token, studentInfo, setUser, clearUser }
+  return { token, studentInfo, setUser, setStudentInfo, clearUser }
 })

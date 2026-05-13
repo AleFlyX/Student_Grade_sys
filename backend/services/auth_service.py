@@ -104,3 +104,19 @@ class AuthService:
         new_password_hash = PasswordUtil.hash_password(new_password)
         await StudentMapper.update_password(student_id, new_password_hash)
         return {"success": True}, None
+
+    @classmethod
+    async def update_profile(cls, student_id, name, major=None, grade=None):
+        if not name:
+            return None, "姓名不能为空"
+
+        await StudentMapper.update_profile(student_id, name, major, grade)
+
+        return {
+            "studentInfo": {
+                "studentId": student_id,
+                "name": name,
+                "major": major,
+                "grade": grade,
+            }
+        }, None

@@ -45,3 +45,12 @@ class StudentMapper(BaseMapper):
             WHERE student_id = %s
         """
         return await cls.execute_update(sql, (password_hash, student_id))
+
+    @classmethod
+    async def update_profile(cls, student_id, name, major=None, grade=None):
+        sql = """
+            UPDATE students
+            SET name = %s, major = %s, grade = %s
+            WHERE student_id = %s
+        """
+        return await cls.execute_update(sql, (name, major, grade, student_id))

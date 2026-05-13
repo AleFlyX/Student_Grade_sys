@@ -80,16 +80,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
+import { getCurrentStudentApi } from '@/api/auth'
 import { useUserStore } from '@/stores/user'
 import { getGradesApi, type GradeQueryParams } from '@/api/grade'
 import type { GradeData } from '@/types/grade'
 
 const router = useRouter()
 const userStore = useUserStore()
-const studentInfo = userStore.studentInfo
+const studentInfo = computed(() => userStore.studentInfo)
 
 const loading = ref(false)
 const gradeData = ref<GradeData | null>(null)
@@ -102,7 +103,7 @@ const fetchGrades = async () => {
   try {
     const data = await getGradesApi(queryParams.value)
     gradeData.value = data
-  } catch (error) {
+  } catch {
     gradeData.value = null
   } finally {
     loading.value = false
@@ -123,7 +124,18 @@ const logout = () => {
     .catch(() => {})
 }
 
+const loadProfile = async () => {
+  try {
+    const data = await getCurrentStudentApi()
+    userStore.setStudentInfo(data.studentInfo)
+  } catch {
+  }
+}
+
 onMounted(() => {
+  if (!userStore.studentInfo) {
+    loadProfile()
+  }
   fetchGrades()
 })
 </script>

@@ -3,7 +3,7 @@ from sanic.response import empty
 
 from api.v1.auth import ChangePasswordView, LoginView, LogoutView, RegisterView
 from api.v1.grade import GradeQueryView
-from controllers.student_controller import StudentProfileView
+from controllers.student_controller import StudentProfileView, UpdateProfileView
 from mappers.base_mapper import BaseMapper
 from middleware.auth_middleware import auth_middleware
 
@@ -56,6 +56,7 @@ app.add_route(RegisterView.as_view(), "/api/auth/register", methods=["POST"])
 app.add_route(LogoutView.as_view(), "/api/auth/logout", methods=["POST"])
 app.add_route(ChangePasswordView.as_view(), "/api/auth/change-password", methods=["PUT"])
 app.add_route(StudentProfileView.as_view(), "/api/students/me", methods=["GET"])
+app.add_route(UpdateProfileView.as_view(), "/api/students/me", methods=["PUT"])
 app.add_route(GradeQueryView.as_view(), "/api/grades", methods=["GET"])
 
 

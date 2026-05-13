@@ -84,6 +84,48 @@ class ChangePasswordView(HTTPMethodView):
             }, status=500)
 
 
+class UpdateProfileView(HTTPMethodView):
+    async def put(self, request):
+        try:
+            student_info = getattr(request.ctx, "student_info", None)
+            if not student_info:
+                return json({
+                    "code": 401,
+                    "message": "未提供认证信息",
+                    "data": None,
+                }, status=401)
+
+            data = request.json or {}
+            name = data.get("name")
+            major = data.get("major")
+            grade = data.get("grade")
+
+            result, error = await AuthService.update_profile(
+                student_info.get("student_id"),
+                name,
+                major,
+                grade,
+            )
+            if error:
+                return json({
+                    "code": 400,
+                    "message": error,
+                    "data": None,
+                }, status=400)
+
+            return json({
+                "code": 200,
+                "message": "个人信息更新成功",
+                "data": result,
+            })
+        except Exception as exc:
+            return json({
+                "code": 500,
+                "message": f"服务器错误: {str(exc)}",
+                "data": None,
+            }, status=500)
+
+
 class LogoutView(HTTPMethodView):
     async def post(self, request):
         try:

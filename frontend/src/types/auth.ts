@@ -25,3 +25,8 @@ export interface LoginResponse {
 }
 
 export interface RegisterResponse extends LoginResponse {}
+
+export interface ChangePasswordParams {
+  oldPassword: string
+  newPassword: string
+}

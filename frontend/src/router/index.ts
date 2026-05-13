@@ -4,7 +4,7 @@ import { getToken } from '@/utils/token'
 const routes = [
   {
     path: '/',
-    redirect:'/login',
+    redirect: '/grades',
     meta: { requiresAuth: false },
   },
   {
@@ -17,6 +17,12 @@ const routes = [
     path: '/grades',
     name: 'GradeQuery',
     component: () => import('@/views/main/grade/GradeQuery.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/profile',
+    name: 'StudentCenter',
+    component: () => import('@/views/main/student/StudentCenter.vue'),
     meta: { requiresAuth: true },
   },
 ]
@@ -32,7 +38,7 @@ router.beforeEach((to, from, next) => {
   if (meta.requiresAuth && !token) {
     next('/login')
   } else if (to.path === '/login' && token) {
-    next('/')
+    next('/grades')
   } else {
     next()
   }

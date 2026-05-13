@@ -53,6 +53,10 @@ class Request {
   public post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
     return this.instance.post(url, data, config)
   }
+
+  public put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+    return this.instance.put(url, data, config)
+  }
 }
 
 export default new Request(import.meta.env.VITE_API_BASE_URL || '/api')
